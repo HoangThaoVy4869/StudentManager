@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </head>
+    <body>
+    {% if current_user.is_authenticated %}
+        <div class="container">
+            <div class="col md-12">
+                <div class="jumbotron p-3">
+                    <h2><b>Quản lý học sinh </b>
+                        <button type="button" class="btn btn-primary float-right">
+                            <a href="/homeMinistry" style="color:white; text-decoration: none">Quay lại</a>
+                        </button>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Họ Tên</th>
+                                    <th>Giới Tính</th>
+                                    <th>Ngày Sinh</th>
+                                    <th>Địa Chỉ</th>
+                                    <th>Lớp</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for s in class_students %}
+                                <tr>
+                                    <td>{{ s.id }}</td>
+                                    <td data-name="fullname" class="fullname">{{s.fullname}}</td>
+                                    <td data-name="gender" class="gender">{{s.gender}}</td>
+                                    <td data-name="birth" class="birth">{{s.birth}}</td>
+                                    <td data-name="address" class="address">{{s.address}}</td>
+                                    <td data-name="className" class="className" >{{s.className}}</td>
+                                    <td>
+                                        <a href="/updateClassList/{{s.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{s.id}}">Sửa</a>
+                                        <a href="/delete_classList/{{s.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Bạn có chắc muốn xóa ?')">Xóa</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <!-- Modal Edit -->
+                            <div id="modaledit{{s.id}}" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header"><h4 class="modal-title">Cập nhật</h4></div>
+                                        <div class="modal-body">
+                                            <form action="{{url_for('updateClassList')}}" method="POST">
+                                                <div class="form-group">
+                                                    <label>Họ tên:</label>
+                                                    <input type="hidden"  name="id" value="{{s.id}}">
+                                                    <input type="text" class="form-control" name="fullname" value="{{s.fullname}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Giới Tính:</label>
+                                                    <input type="text" class="form-control" name="gender" value="{{s.gender}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Ngày Sinh:</label>
+                                                    <input type="date" class="form-control" name="birth" value="{{s.birth}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Địa Chỉ:</label>
+                                                    <input type="text" class="form-control" name="address" value="{{s.address}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlSelect1">Lớp</label>
+                                                    <select class="form-control" id="className" name="className">
+                                                        {% for c in classes %}
+                                                            <option value="{{c.className}}">{{ c.className }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                                    <button class="btn btn-primary" type="submit">Chỉnh sửa</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </table>
+
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                              </div>
+                              <div class="modal-body">
+                                  <div class="form-group">
+                                      <label for="exampleFormControlSelect1">Lớp</label>
+                                        <select class="form-control" id="exampleFormControlSelect1" name="className">
+                                          {% for s in class_students %}
+                                            <option>{{s.className}}</option>
+                                            {% endfor %}
+                                        </select>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    </body>
+</html>

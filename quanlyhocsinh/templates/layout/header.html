@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#">Student Management Website</a>
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+<!--        <a class="nav-link" ></a>-->
+      </li>
+      {% for s in subjects %}
+      <li class="nav-item ">
+        <a class="nav-link">{{ s.name }}</a>
+      </li>
+      {% endfor %}
+      {% if current_user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link text-danger" href="{{ url_for('home') }}" onclick="return confirm('Bạn có chắc là muốn đăng xuất?');">
+          {% if current_user.avatar.startswith('https') %}
+            <img src="{{ current_user.avatar }}" class="rounded-circle" width="30" alt="{{ current_user.username }}" />
+          {% else %}
+            <img src="{{ url_for('static', filename=current_user.avatar) }}" class="rounded-circle" width="30" alt="{{ current_user.username }}" />
+          {% endif %}
+          {{ current_user.username }}
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+  <form class="form-inline">
+    <input class="form-control mr-sm-2" type="text" name="keyword" placeholder="Nhập từ khóa...">
+    <button class="btn btn-success" type="submit">Tìm kiếm</button>
+  </form>
+</nav>

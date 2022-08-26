@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </head>
+    <body>
+    {% if current_user.is_authenticated %}
+        <div class="container">
+            <div class="col md-12">
+                <div class="jumbotron p-3">
+                    <h2><b>Quản lý học sinh </b>
+                        <button type="button"  class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModal">Nhập điểm</button>
+                        <button type="button" class="btn btn-primary float-right" style="margin-right: 10px;">
+                            <a href="/homeTeacher" style="color:white; text-decoration: none">Quay lại</a>
+                        </button>
+                    </h2>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Họ Tên</th>
+                                    <th>Lớp</th>
+                                    <th>Môn</th>
+                                    <th>Điểm 15'</th>
+                                    <th>Điểm 1 tiết</th>
+                                    <th>Điểm thi</th>
+                                    <th>Học kỳ</th>
+                                    <th>Năm học</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for e in examDetail %}
+                                <tr>
+                                    <td>{{ e.id }}</td>
+                                    <td data-name="fullname" class="fullname">{{ e.fullname }}</td>
+                                    <td data-name="className" class="className">{{ e.className }}</td>
+                                    <td data-name="subject" class="subject">{{e.subject}}</td>
+                                    <td data-name="point15" class="point15">{{e.point15}}</td>
+                                    <td data-name="point60" class="point60">{{e.point60}}</td>
+                                    <td data-name="testScore" class="testScore" >{{e.testScore}}</td>
+                                    <td data-name="semester" class="semester">{{e.semester}}</td>
+                                    <td data-name="schoolYear" class="schoolYear" >{{e.schoolYear}}</td>
+                                    <td>
+                                        <a href="/updatescore/{{e.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{e.id}}">Sửa</a>
+                                        <a href="/delete/{{e.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Bạn có chắc muốn xóa ?')">Xóa</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <!-- Modal Edit -->
+                            <div id="modaledit{{e.id}}" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header"><h4 class="modal-title">Cập nhật</h4></div>
+                                        <div class="modal-body">
+                                            <form action="{{url_for('updatescore')}}" method="POST">
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlSelect1">Họ tên:</label>
+                                                    <input type="hidden"  name="id" value="{{e.id}}">
+                                                    <select class="form-control" id="fullname" name="fullname">
+                                                        {% for s in students %}
+                                                            <option value="{{s.fullname}}">{{ s.fullname }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlSelect1">Lớp:</label>
+                                                    <select class="form-control" id="className" name="className">
+                                                        {% for c in classes %}
+                                                            <option value="{{c.className}}">{{ c.className }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Môn:</label>
+                                                    <input type="text" class="form-control" name="subject" value="{{e.subject}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Điểm 15':</label>
+                                                    <input type="text" class="form-control" name="point15" value="{{e.point15}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Điểm 1 tiết:</label>
+                                                    <input type="text" class="form-control" name="point60" value="{{e.point60}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Điểm thi:</label>
+                                                    <input type="text" class="form-control" name="testScore" value="{{e.testScore}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Học kỳ:</label>
+                                                    <input type="text" class="form-control" name="semester" value="{{e.semester}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Năm học:</label>
+                                                    <input type="text" class="form-control" name="schoolYear" value="{{e.schoolYear}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                                    <button class="btn btn-primary" type="submit">Chỉnh sửa</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </table>
+
+                        <!-- Modal Add -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Nhập điểm</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">×</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <form action="{{ url_for('add_examResult') }}" method="POST" class="form" id="form-1" enctype="multipart/form-data">
+                                      <div class="form-group">
+                                        <label for="exampleFormControlSelect2">Họ Tên:</label>
+                                            <select class="form-control" id="exampleFormControlSelect2" name="fullname">
+                                              {% for s in students %}
+                                                <option>{{s.fullname}}</option>
+                                                {% endfor %}
+                                            </select>
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="exampleFormControlSelect1">Lớp:</label>
+                                            <select class="form-control" id="exampleFormControlSelect1" name="className">
+                                              {% for s in classes %}
+                                                <option>{{s.className}}</option>
+                                                {% endfor %}
+                                            </select>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-form-label">Môn học:</label>
+                                        <input type="text" class="form-control" id="subject" name="subject">
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-form-label">Điểm 15':</label>
+                                        <input type="text" class="form-control" id="point15" name="point15">
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-form-label">Điểm 1 tiết:</label>
+                                        <input type="text" class="form-control" id="point60" name="point60">
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-form-label">Điểm thi:</label>
+                                        <input type="text" class="form-control" id="testScore" name="testScore">
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-form-label">Học kỳ:</label>
+                                        <input type="text" class="form-control" id="semester" name="semester">
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-form-label">Năm học:</label>
+                                        <input type="text" class="form-control" id="schoolYear" name="schoolYear">
+                                      </div>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <input name="cmdsubmit" class="btn btn-primary" type="submit" value="Nhập điểm" />
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    </body>
+</html>

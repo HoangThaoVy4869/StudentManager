@@ -1,0 +1,19 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+
+<link href="{{ url_for('static', filename='css/mainTeacher.css') }}" rel="stylesheet" />
+<h1 class="text-center text-info text-main">QUẢN LÝ HỌC SINH</h1>
+<button type="button" class="button btn-subj">
+  <a href="/homeTeacher/inputScore" class="button__text">Nhập điểm</a>
+  <span class="button__icon">
+    <ion-icon name="arrow-down-outline"></ion-icon>
+  </span>
+</button>
+<button type="button" class="button btn-report">
+  <a href="/homeTeacher/outputScore" class="button__text">Xuất điểm</a>
+  <span class="button__icon">
+    <ion-icon name="arrow-up-outline"></ion-icon>
+  </span>
+</button>
+<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+{% endblock %}

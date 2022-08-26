@@ -1,0 +1,118 @@
+{% extends 'admin/base.html' %}
+
+{% block body %}
+{% if current_user.is_authenticated %}
+{{ msg }}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<h1 class="text-center text-info text-main">TỔNG KẾT MÔN HỌC</h1>
+<h4>Học kỳ I</h4>
+<div class="row">
+  <div class="col-md-6 col-xs-12">
+    <table class="table">
+      <tr>
+        <th>Tên lớp</th>
+        <th>Sĩ số</th>
+        <th>Số lượng đạt</th>
+        <th>Tỉ lệ (%)</th>
+      </tr>
+      {% for s in stats %}
+      <tr>
+        <td>{{ s[0] }}</td>
+        <td>{{ s[1] }}</td>
+        <td>{{ s[2] }}</td>
+        <td>{{ "{:.2f}".format(s[3]) }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div class="col-md-6 col-xs-12">
+    <canvas id="myAVGChart1"></canvas>
+  </div>
+</div>
+<h4>Học kỳ II</h4>
+<div class="row">
+  <div class="col-md-6 col-xs-12">
+    <table class="table">
+      <tr>
+        <th>Tên lớp</th>
+        <th>Sĩ số</th>
+        <th>Số lượng đạt</th>
+        <th>Tỉ lệ (%)</th>
+      </tr>
+      {% for s in stats2 %}
+      <tr>
+        <td>{{ s[0] }}</td>
+        <td>{{ s[1] }}</td>
+        <td>{{ s[2] }}</td>
+        <td>{{ "{:.2f}".format(s[3]) }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+  <div class="col-md-6 col-xs-12">
+    <canvas id="myAVGChart2"></canvas>
+  </div>
+</div>
+
+<script>
+    let labels = [], labels2 = []
+    let info = [], info2 = []
+
+    {% for s in stats %}
+        {% if s[2] %}
+            labels.push('{{ s[0] }}')
+            info.push({{ s[3] }})
+        {% endif %}
+    {% endfor %}
+
+    {% for s in stats2 %}
+        {% if s[2] %}
+            labels2.push('{{ s[0] }}')
+            info2.push({{ s[3] }})
+        {% endif %}
+    {% endfor %}
+
+
+    window.onload = function() {
+        let ctx = document.getElementById('myAVGChart1').getContext('2d');
+        showChart(ctx, labels, info, 'bar')
+        let ctx2 = document.getElementById('myAVGChart2').getContext('2d');
+        showChart(ctx2, labels2, info2, 'bar')
+      }
+
+      function showChart(ctx, labels, info, type){
+         let colors = [], borderColors = []
+         let r, g, b
+         for (let i = 0; i < labels.length; i++) {
+            r = parseInt(Math.random()*255)
+            g = parseInt(Math.random()*255)
+            b = parseInt(Math.random()*255)
+            colors.push(`rgba(${r}, ${g}, ${b}, 0.2)`)
+            borderColors.push(`rgba(${r}, ${g}, ${b}, 1)`)
+      }
+
+      const myChart = new Chart(ctx, {
+          type: type,
+          data: {
+              labels: labels,
+              datasets: [{
+                  label: 'Thống kê tổng kết môn học theo lớp',
+                  data: info,
+                  backgroundColor: colors,
+                  borderColor: borderColors,
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+    }
+</script>
+{% endif %}
+{% endblock %}
+

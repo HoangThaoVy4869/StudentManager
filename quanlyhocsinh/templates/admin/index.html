@@ -1,0 +1,35 @@
+{% extends 'admin/base.html' %}
+
+{% block body %}
+{% if current_user.is_authenticated %}
+
+<link href="{{ url_for('static', filename='css/homeAdmin.css') }}" rel="stylesheet" />
+<h1 class="text-center text-info text-main">QUẢN LÝ HỌC SINH</h1>
+<button type="button" class="button btn-subj">
+  <a href="/admin/subject" class="button__text">Quản lý môn học</a>
+  <span class="button__icon">
+    <ion-icon name="book-outline"></ion-icon>
+  </span>
+</button>
+<button type="button" class="button btn-regula">
+  <a href="/admin/maxminage/" class="button__text">Quy định số tuổi</a>
+  <span class="button__icon">
+    <ion-icon name="person-outline"></ion-icon>
+  </span>
+</button>
+<button type="button" class="button btn-dia">
+  <a href="/admin/maxclassnumber/" class="button__text">Thay đổi sĩ số</a>
+  <span class="button__icon">
+    <ion-icon name="people-circle-outline"></ion-icon>
+  </span>
+</button>
+<button type="button" class="button btn-report">
+  <a href="/admin/statsview" class="button__text">Báo cáo và vẽ biểu đồ</a>
+  <span class="button__icon">
+    <ion-icon name="color-palette-outline"></ion-icon>
+  </span>
+</button>
+<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+{% endif %}
+{% endblock %}
+

@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "schoolYear": "2018",
+        "avg1": 8,
+        "avg2": 7,
+        "class_id": 1,
+        "exam_id": 1
+    },
+    {
+        "id": 2,
+        "schoolYear": "2018",
+        "avg1": 7,
+        "avg2": 9,
+        "class_id": 1,
+        "exam_id": 1
+    },
+    {
+        "id": 3,
+        "schoolYear": "2018",
+        "avg1": 7,
+        "avg2": 4,
+        "class_id": 1,
+        "exam_id": 1
+    },
+    {
+        "id": 4,
+        "schoolYear": "2018",
+        "avg1": 6,
+        "avg2": 8,
+        "class_id": 1,
+        "exam_id": 1
+    }
+]

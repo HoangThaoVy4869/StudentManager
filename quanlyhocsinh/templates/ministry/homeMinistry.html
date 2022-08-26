@@ -1,0 +1,25 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+
+<link href="{{ url_for('static', filename='css/homeMinistry.css') }}" rel="stylesheet" />
+<h1 class="text-center text-info text-main">QUẢN LÝ HỌC SINH</h1>
+<button type="button" class="button btn-subj">
+  <a href="/homeMinistry/receiveApplication" class="button__text">Tiếp nhận hồ sơ</a>
+  <span class="button__icon">
+    <ion-icon name="arrow-down-outline"></ion-icon>
+  </span>
+</button>
+<button type="button" class="button btn-report">
+  <a href="/homeMinistry/classList" class="button__text">Lập danh sách lớp</a>
+  <span class="button__icon">
+    <ion-icon name="arrow-up-outline"></ion-icon>
+  </span>
+</button>
+<button type="button" class="button btn-regula">
+  <a href="/templates/editClass" class="button__text">Điều chỉnh lớp học</a>
+  <span class="button__icon">
+    <ion-icon name="arrow-up-outline"></ion-icon>
+  </span>
+</button>
+<script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
+{% endblock %}

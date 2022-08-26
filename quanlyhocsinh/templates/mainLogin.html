@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management</title>
+    <link href="{{url_for('static',filename='css/style.css')}}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{url_for('static', filename='images/favicon.ico')}}">
+</head>
+<body>
+    <section>
+        <div class="imgBx">
+          <img src="{{ url_for('static', filename= 'images/student.jpg') }} " />
+        </div>
+        <div class="contentBx col-xl-9 col-lg-14 col-md-8">
+            <div class="formBx">
+                <div class="formBxmini">
+                    <h1>CHÀO MỪNG ĐẾN VỚI!</h1>
+                    <h1>Phần mềm quản lý học sinh!</h1>
+                    <h2>Đăng nhập</h2>
+                    <form class="user">
+                        <br>
+                        <div class="form-group">
+                            <a href="/loginAdmin" class="btn btn-primary btn-user btn-block">
+                                Với tư cách là Admin
+                            </a>
+                        </div>
+                        <hr>
+                        <br>
+                        <div class="form-group">
+                            <a href="/loginTeacher" class="btn btn-success btn-user btn-block">
+                                Với tư cách là giáo viên
+                            </a>
+                        </div>
+                        <hr>
+                        <br>
+                        <div class="form-group">
+                            <a href="/loginMinistry" class="btn btn-info btn-user btn-block">
+                                Với tư cách là giáo vụ
+                            </a>
+                        </div>
+                        <hr>
+                        <br>
+                        <div class="form-group">
+                            <a href="/register" class="btn btn-danger btn-user btn-block">
+                                Chưa có tài khoản? Đăng ký
+                            </a>
+                        </div>
+                        <hr>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

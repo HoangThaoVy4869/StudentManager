@@ -1,0 +1,71 @@
+.button {
+  display: inline-flex;
+  height: 200px;
+  width: 254px;
+  padding: 0;
+  background: #009578;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  overflow: hidden;
+  font-family: "Quicksand", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 100px 10px;
+}
+
+.button a{
+    text-decoration: none;
+}
+
+.button a:hover{
+    color: orange;
+}
+
+.button:hover {
+  background: #008168;
+}
+
+.button:active {
+  background: #006e58;
+}
+
+.btn-subj {
+    background-color: #4e73df;
+}
+
+.btn-regula {
+    background-color: #1cc88a;
+}
+
+.btn-dia {
+    background-color: #36b9cc;
+}
+
+.btn-report{
+    background-color: #e74a3b;
+}
+
+.button__text,
+.button__icon {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 15px;
+  color: #fff;
+  height: 100%;
+}
+
+.button__text{
+    width: 200px;
+    justify-content: center;
+}
+
+.button__icon {
+  font-size: 1.5em;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.text-main{
+    margin-top: 15px;
+}

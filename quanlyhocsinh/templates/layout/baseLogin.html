@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="{{url_for('static', filename='images/favicon.ico')}}">
+    <link href="{{url_for('static',filename='css/login.css')}}" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}</title>
+</head>
+<body>
+    {% block header %}{% endblock %}
+
+    {% block content %}MY CONTENT{% endblock %}
+
+    {% block footer %}{% endblock %}
+</body>
+</html>
